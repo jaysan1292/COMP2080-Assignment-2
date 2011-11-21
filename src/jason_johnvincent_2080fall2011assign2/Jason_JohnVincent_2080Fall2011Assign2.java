@@ -1,19 +1,17 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * 100726948 - Jason Recillo - Section B
+ * --------- - John Vincent Adame - Section A
  */
 package jason_johnvincent_2080fall2011assign2;
+import java.util.*;
+import java.io.*;
 
-/**
- *
- * @author Jason Recillo
- */
 public class Jason_JohnVincent_2080Fall2011Assign2 {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        
     }
 }
