@@ -8,10 +8,7 @@ import java.io.*;
 
 public class Jason_JohnVincent_2080Fall2011Assign2 {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        
+        //ReverseString
     }
 }
