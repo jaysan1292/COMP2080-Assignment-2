@@ -19,6 +19,7 @@ public class Jason_JohnVincent_2080Fall2011Assign2 {
         while (plist.peek()!=null){
             System.out.print(plist.poll().toString()+" ");
         }
+        //EndDisplayPalindromes
     }
     
     public static Queue getPalindromes(){
