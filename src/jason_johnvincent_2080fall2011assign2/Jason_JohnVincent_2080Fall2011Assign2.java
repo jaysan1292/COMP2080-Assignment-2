@@ -12,28 +12,44 @@ public class Jason_JohnVincent_2080Fall2011Assign2 {
     static BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
 
     public static void main(String[] args) {
-        //DisplayPalindromes
-        Queue plist = new LinkedList();
+        ProgramStart:
+        System.out.println("COMP 2080 Assignment 2\n----------------------------\nSelect an option:");
+        System.out.println("1. Display Palindromes");
+        System.out.println("2. Add Palindrome");
+        System.out.println("3. Find Palindrome");
+        System.out.println("4. Reverse String");
+        System.out.println("5. Extra");
 
-        plist = getPalindromes();
-
-        System.out.println("Palindrome list:");
-        while (plist.peek() != null) {
-            System.out.print(plist.poll().toString() + " ");
-        }
-        //EndDisplayPalindromes
-        
-        //ReverseString
-        Stack pstack = new Stack();
-        System.out.print("\n\nEnter a string to reverse: ");
-        String line = null;
+        System.out.print("Enter an option: ");
         try {
-            line = keyboard.readLine();
-        } catch (IOException e) {
-            System.err.println("Error: " + e.getMessage());
+            //String option = keyboard.readLine();
         }
-        pstack = reverseString(line);
-        //EndReverseString
+//        //DisplayPalindromes
+//        Queue plist = new LinkedList();
+//
+//        plist = getPalindromes();
+//
+//        System.out.println("Palindrome list:");
+//        while (plist.peek() != null) {
+//            System.out.print(plist.poll().toString() + " ");
+//        }
+//        //EndDisplayPalindromes
+//        
+//        //ReverseString
+//        Stack pstack = new Stack();
+//        System.out.print("\n\nEnter a string to reverse: ");
+//        String line = null;
+//        try {
+//            line = keyboard.readLine();
+//        } catch (IOException e) {
+//            System.err.println("Error: " + e.getMessage());
+//        }
+//        pstack = reverseString(line);
+//        //EndReverseString
+
+        //AddPalindrome
+        addPalindrome();
+        //EndAddPalindrome
     }
 
     public static Queue getPalindromes() {
@@ -69,5 +85,44 @@ public class Jason_JohnVincent_2080Fall2011Assign2 {
             System.out.print(pstack.pop().toString() + " ");
         }
         return pstack;
+    }
+
+    public static void addPalindrome() {
+        String palindrome = enterPalindrome();
+        try {
+            FileWriter fwriter = new FileWriter("palindrome.txt");
+        } catch (FileNotFoundException e) {
+            System.err.println("Error: " + e.getMessage());
+        } catch (IOException e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+    }
+
+    public static String enterPalindrome() {
+        System.out.print("Enter a palindrome: ");
+        String palindrome = "";
+        try {
+            palindrome = keyboard.readLine();
+        } catch (IOException e) {
+            System.err.println("Error: " + e.getMessage());
+            palindrome = enterPalindrome();
+        }
+        if (isPalindrome(palindrome)) {
+            System.out.println(palindrome + " is a palindrome.");
+        } else {
+            System.out.println(palindrome + " is not a palinrome.");
+        }
+
+        return palindrome;
+    }
+
+    public static boolean isPalindrome(String p) {
+        if (p.length() == 0 || p.length() == 1) {
+            return true;
+        }
+        if (p.charAt(0) == p.charAt(p.length() - 1)) {
+            return isPalindrome(p.substring(1, p.length() - 1));
+        }
+        return false;
     }
 }
