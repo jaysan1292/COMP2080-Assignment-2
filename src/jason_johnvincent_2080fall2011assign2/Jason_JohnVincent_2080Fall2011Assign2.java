@@ -21,13 +21,14 @@ public class Jason_JohnVincent_2080Fall2011Assign2 {
             System.out.println("2. Add Palindrome");
             System.out.println("3. Find Palindrome");
             System.out.println("4. Reverse String");
-            System.out.println("5. Extra");
+            System.out.println("5. Extra: Check Anagram");
             System.out.println("6. Exit Program");
 
             System.out.print("Enter an option: ");
             try {
                 option = keyboard.readLine();
                 opt = Integer.parseInt(option);
+                System.out.println("----------------------------");
 
                 if (opt < 1 || opt > 6) {
                     throw new InvalidOptionException();
@@ -47,7 +48,7 @@ public class Jason_JohnVincent_2080Fall2011Assign2 {
                         funcReverseString();
                         break;
                     case 5:
-                        funcExtra();
+                        funcAnagram();
                         break;
                     case 6:
                         System.exit(0);
@@ -101,13 +102,49 @@ public class Jason_JohnVincent_2080Fall2011Assign2 {
     }
 
     public static void funcFindPalindromes() {
-        //Program code
+        LinkedList p = new LinkedList();
+        try {
+            FileInputStream fstream = new FileInputStream("palindrome.txt");
+            DataInputStream input = new DataInputStream(fstream);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+            String line;
+            if (p.isEmpty()) {
+                while ((line = reader.readLine()) != null) {
+                    p.add(line);
+                }
+                input.close();
+            }
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+
+        // Sort the list
+        p = sortList(p);
+
+        // Search the list
+        try {
+            System.out.print("Enter a palindrome to search for: ");
+            String query = keyboard.readLine();
+
+            if (isPalindrome(query)) {
+                if (searchList(p, query)) {
+                    System.out.println("The palindrome \"" + query + "\" was found in the list.");
+                } else {
+                    System.out.println("The palindrome \"" + query + "\" was not found.");
+                }
+            } else {
+                System.out.println("The query is not a palindrome.");
+            }
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+
         enterToContinue();
     }
 
     public static void funcReverseString() {
         Stack pstack = new Stack();
-        System.out.print("\n\nEnter a string to reverse: ");
+        System.out.print("Enter a string to reverse: ");
         String line = null;
         try {
             line = keyboard.readLine();
@@ -115,19 +152,51 @@ public class Jason_JohnVincent_2080Fall2011Assign2 {
             System.err.println("Error: " + e.getMessage());
         }
         pstack = reverseString(line);
-        
+
         System.out.print("\n");
         enterToContinue();
     }
 
-    public static void funcExtra() {
-        // Program code
+    public static void funcAnagram() {
+        try {
+            System.out.print("Enter the first string to test: ");
+            String first = keyboard.readLine();
+            System.out.print("Enter the second string to test: ");
+            String second = keyboard.readLine();
+            if (isAnagram(first, second)) {
+                System.out.println("\""+second + "\" is an anagram of \"" + first + "\".");
+            } else {
+                System.out.println("\""+second + "\" is not an anagram of \"" + first + "\".");
+            }
+        } catch (IOException e) {
+            System.err.println("Error: " + e.getMessage());
+        }
         enterToContinue();
     }
 
+    public static boolean isAnagram(String p, String q) {
+        p = p.replaceAll("\\s", "");
+        p = p.toLowerCase();
+        char[] pcharArray = p.toCharArray();
+        Arrays.sort(pcharArray);
+        String s1 = new String(pcharArray);
+
+        q = q.replaceAll("\\s", "");
+        q = q.toLowerCase();
+        char[] qcharArray = q.toCharArray();
+        Arrays.sort(qcharArray);
+        String s2 = new String(qcharArray);
+
+        if (s1.equals(s2)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     /*-------------------------*/
     /* SUPPLEMENTARY FUNCTIONS */
     /*-------------------------*/
+
     public static void enterToContinue() {
         System.out.print("----------------------------\nPress <ENTER> to continue.");
         try {
@@ -161,6 +230,7 @@ public class Jason_JohnVincent_2080Fall2011Assign2 {
     public static Stack reverseString(String str) {
         Stack pstack = new Stack();
         char[] line = str.toCharArray();
+        System.out.print("Your input, reversed: ");
         for (int i = 0; i < line.length; i++) {
             pstack.addElement(line[i]);
         }
@@ -198,6 +268,44 @@ public class Jason_JohnVincent_2080Fall2011Assign2 {
             return isPalindrome(p.substring(1, p.length() - 1));
         }
         return false;
+    }
+
+    public static LinkedList sortList(LinkedList l) {
+//        LinkedList q = new LinkedList();
+//        
+//        for (int i = 0; i < l.size(); i++) {
+//            if (q.size() == 0) {
+//                q.add(0, l.removeFirst());
+//            } else if (q.get(0) >) {
+//                
+//            }
+//        }
+        Object[] asdf = l.toArray();
+        Arrays.sort(asdf);
+
+        LinkedList q = new LinkedList();
+        q.addAll(Arrays.asList(asdf));
+
+        return q;
+    }
+
+    private static boolean searchList(LinkedList p, String q) {
+        int first, last, mid = 0;
+        boolean found = false;
+        first = 0;
+        last = p.size() - 1;
+        while ((!found) && (first <= last)) {
+            mid = first + (last - first) / 2;
+            //if (p.get(mid) == q) {
+            if (q.compareTo(p.get(mid).toString()) == 0) {
+                found = true;
+            } else if (q.compareTo(p.get(mid).toString()) < 0) {
+                last = mid - 1;
+            } else if (q.compareTo(p.get(mid).toString()) > 0) {
+                first = mid + 1;
+            }
+        }
+        return found;
     }
 }
 
