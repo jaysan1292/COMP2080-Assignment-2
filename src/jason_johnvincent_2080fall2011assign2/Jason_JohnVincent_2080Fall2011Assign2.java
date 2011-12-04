@@ -1,6 +1,6 @@
 /*
  * 100726948 - Jason Recillo - Section B
- * --------- - John Vincent Adame - Section A
+ * 100719816 - John Vincent Adame - Section A
  */
 package jason_johnvincent_2080fall2011assign2;
 
